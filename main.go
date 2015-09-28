@@ -33,6 +33,12 @@ func main() {
 	fmt.Println("Starting nano server...")
 	fmt.Printf("Serving directory: %s\n", dir)
 
+	if crtFile != "" && keyFile != "" {
+		fmt.Printf("Using certificate: %s\nUsing private key: %s\n", crtFile, keyFile)
+	} else {
+		fmt.Println("No certificate and/or key provided!")
+	}
+
 	srv := &http.Server{
 		Addr:    port,
 		Handler: &requestLogger{http.FileServer(http.Dir(dir))},
