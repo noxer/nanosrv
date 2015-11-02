@@ -19,7 +19,7 @@ var (
 func init() {
 	d, err := os.Getwd()
 	if err != nil {
-		fmt.Errorf("Error: %s\n", err)
+		fmt.Printf("Error: %s\n", err)
 	}
 	flag.StringVar(&dir, "d", d, "The directory that should be served.")
 	flag.StringVar(&port, "p", ":8888", "The port/interface the server should work on.")
@@ -43,12 +43,12 @@ func main() {
 	if crtFile != "" && keyFile != "" {
 		fmt.Printf("Starting HTTPS server on port %s... Kill with [Ctrl]-[C]!\n", port)
 		if err := srv.ListenAndServeTLS(crtFile, keyFile); err != nil {
-			fmt.Errorf("Error: %s\n", err)
+			fmt.Printf("Error: %s\n", err)
 		}
 	} else {
 		fmt.Printf("Starting HTTP server on port %s... Kill with [Ctrl]-[C]!\n", port)
 		if err := srv.ListenAndServe(); err != nil {
-			fmt.Errorf("Error: %s\n", err)
+			fmt.Printf("Error: %s\n", err)
 		}
 	}
 }
