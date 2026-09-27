@@ -1,3 +1,5 @@
+// Command nanosrv is a tiny static file server that serves a directory over
+// HTTP, or HTTPS with HTTP/2 when given a certificate and key.
 package main
 
 import (
@@ -5,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
 
 var (
@@ -34,8 +37,9 @@ func main() {
 		fmt.Println("No certificate and/or key provided!")
 	}
 	srv := &http.Server{
-		Addr:    port,
-		Handler: &requestLogger{http.FileServer(http.Dir(dir))},
+		Addr:              port,
+		Handler:           &requestLogger{http.FileServer(http.Dir(dir))},
+		ReadHeaderTimeout: 10 * time.Second,
 	}
 	if crtFile != "" && keyFile != "" {
 		fmt.Printf("Starting HTTPS server on port %s... Kill with [Ctrl]-[C]!\n", port)
