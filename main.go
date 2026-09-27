@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-
-	"github.com/bradfitz/http2"
 )
 
 var (
@@ -39,7 +37,6 @@ func main() {
 		Addr:    port,
 		Handler: &requestLogger{http.FileServer(http.Dir(dir))},
 	}
-	http2.ConfigureServer(srv, nil)
 	if crtFile != "" && keyFile != "" {
 		fmt.Printf("Starting HTTPS server on port %s... Kill with [Ctrl]-[C]!\n", port)
 		if err := srv.ListenAndServeTLS(crtFile, keyFile); err != nil {
